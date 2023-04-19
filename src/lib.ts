@@ -15,5 +15,7 @@ export function escapeRegExp(str: string) {
  * @returns The extracted username, or undefined if not found.
  */
 export function channelHandle(): string | undefined {
-    return window.location.pathname.match(/^\/(popout\/)?(?<user>[a-zA-Z0-9_]+)/)[2] ?? undefined;
+    const match = window.location.pathname.match(/^\/(popout\/)?(?<user>[a-zA-Z0-9_]+)/);
+    if (match && match[2]) return match[2];
+    return undefined;
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { conf } from '../conf';
-import { log } from '../log';
+import { conf } from '../conf.js';
+import { log } from '../log.js';
 // import { styled } from "@stitches/react";
 
 // const button = styled('button', {
@@ -23,10 +23,10 @@ function Configuration() {
     }, []);
 
     useEffect(() => {
-        if (open) setWebhookUrl(conf.webhookUrl);
+        if (open) setWebhookUrl(conf.webhookUrl ?? '');
     }, [open]);
 
-    if (!open) return undefined;
+    if (!open) return null;
     return <div style={{
         position: "fixed",
         top: 0,

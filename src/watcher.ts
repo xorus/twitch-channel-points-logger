@@ -1,14 +1,14 @@
-import { escapeRegExp } from "./lib";
-import { log } from "./log";
-import { setPoints } from "./store";
+import { escapeRegExp } from "./lib.js";
+import { log } from "./log.js";
+import { setPoints } from "./store.js";
 
 const TOOLTIP_WAIT_DELAY_MS = 300;
 const INITIAL_POINTS_DELAY_MS = 10 * 1000; // first fetch
 const REFRESH_POINTS_DELAY_MS = 1 * 60 * 1000;
 
 export class Watcher {
-    private currencyNameRegex: string;
-    private currentPointCount: string;
+    private currencyNameRegex?: string;
+    private currentPointCount?: string;
 
     computePointCount() {
         const image = document.querySelector<HTMLImageElement>('button .channel-points-icon__image');
@@ -17,7 +17,7 @@ export class Watcher {
         this.currencyNameRegex = escapeRegExp(image.alt);
 
         const btn = image.closest<HTMLButtonElement>('button');
-        if (!btn) return undefined;
+        if (!btn || !btn.parentElement) return undefined;
 
         // fake a mouse over to open the tooltip (the tooltip description does not have screen-reader accessibility I could tap into :-) )
         // this will allow us to get the exact channel point count
@@ -34,7 +34,7 @@ export class Watcher {
                 // find the point count, it will always be in a tooltip in the format "XXX Currency Name"
                 let regex = new RegExp(`([\\d. ',]+) ${this.currencyNameRegex}`, "i");
                 let matches = el.innerHTML.match(regex);
-                if (matches[1]) {
+                if (matches && matches[1]) {
                     // normalize point count into something more number-ish
                     // twitch uses different separators depending on user locale, so we just remove everything that's not a number from the string
                     this.currentPointCount = matches[1].replace(/[^\d]/g, '');
@@ -43,7 +43,7 @@ export class Watcher {
                     break;
                 }
             }
-            btn.parentElement.dispatchEvent(new MouseEvent('mouseout', {
+            btn.parentElement?.dispatchEvent(new MouseEvent('mouseout', {
                 'view': unsafeWindow,
                 'bubbles': true,
                 'cancelable': true

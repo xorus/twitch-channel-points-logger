@@ -1,7 +1,7 @@
-import { WebhookBackend } from "./backend/WebhookBackend";
-import { log } from "./log";
-import { mountConfigUi } from "./ui/configuration";
-import { Watcher } from "./watcher";
+import { WebhookBackend } from "./backend/WebhookBackend.js";
+import { log } from "./log.js";
+import { mountConfigUi } from "./ui/configuration.js";
+import { Watcher } from "./watcher.js";
 
 log("I'm alive!")
 new Watcher();

@@ -1,6 +1,6 @@
-import mitt from "mitt";
+import { Emitter } from 'subscribe'
 
-export const pointEmitter = mitt();
+export const pointEmitter = new Emitter<'change'>();
 let pointValue: string | undefined = undefined;
 
 export function getPoints() {

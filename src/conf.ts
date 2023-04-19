@@ -1,8 +1,8 @@
-import mitt from "mitt";
+import { Emitter } from 'subscribe'
 
 export class Conf {
-    public webhookUrl: string;
-    public readonly emitter = mitt<{loadedValue: never}>();
+    public webhookUrl?: string;
+    public readonly emitter = new Emitter<'loadedValue'>();
 
     public constructor() {
         this.load();

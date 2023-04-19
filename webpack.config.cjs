@@ -1,5 +1,6 @@
 const path = require('path');
 const { UserscriptPlugin } = require('webpack-userscript');
+const { NormalModuleReplacementPlugin } = require('webpack');
 const dev = process.env.NODE_ENV === 'development';
 
 const version = "0.0.1";// + (new Date().getTime());
@@ -12,14 +13,14 @@ module.exports = {
   mode: dev ? 'development' : 'production',
   module: {
     rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-    ],
+      // all files with a `.ts`, `.cts`, `.mts` or `.tsx` extension will be handled by `ts-loader`
+      { test: /\.([cm]?ts|tsx)$/, loader: "ts-loader" }
+    ]
   },
   plugins: [
+    new NormalModuleReplacementPlugin(new RegExp(/^\..+\.js$/), function (resource) {
+      resource.request = resource.request.replace(new RegExp(/\.js$/), '');
+    }),
     new UserscriptPlugin({
       headers: {
         name: 'channel-points-logger',
@@ -54,7 +55,7 @@ module.exports = {
   devServer: {
     port: 8085,
     // open: ['http://locahost:8085/bundle.user.js'],
-    open: true,
+    // open: true,
     static: {
       directory: path.join(__dirname, 'dist'),
       watch: true,
