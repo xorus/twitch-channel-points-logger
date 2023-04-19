@@ -1,6 +1,7 @@
 const path = require('path');
 const { UserscriptPlugin } = require('webpack-userscript');
 const { NormalModuleReplacementPlugin } = require('webpack');
+const FileManagerPlugin = require('filemanager-webpack-plugin');
 const dev = process.env.NODE_ENV === 'development';
 
 const version = "0.0.1";// + (new Date().getTime());
@@ -48,6 +49,15 @@ module.exports = {
       i18n: {
         en: {
           name: 'Twitch Channel Points Logger'
+        }
+      }
+    }),
+    new FileManagerPlugin({
+      events: {
+        onEnd: {
+          copy: [
+            { source: './dist/bundle.user.js', destination: './build/bundle.user.js' }
+          ]
         }
       }
     })

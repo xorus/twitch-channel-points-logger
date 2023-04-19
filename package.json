@@ -13,6 +13,7 @@
   "type": "module",
   "license": "ISC",
   "devDependencies": {
+    "filemanager-webpack-plugin": "^8.0.0",
     "ts-loader": "^9.4.2",
     "typescript": "^5.0.4",
     "webpack": "^5.79.0",
