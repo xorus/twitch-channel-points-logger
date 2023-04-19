@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+      "outDir": "./dist/",
+      "declaration": true,
+      "sourceMap": true,
+      "jsx": "react-jsx",
+      "target": "ES6",
+      "moduleResolution": "nodenext"
+    }
+  }
