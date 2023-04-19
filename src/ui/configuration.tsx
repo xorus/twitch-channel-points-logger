@@ -2,12 +2,7 @@ import { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { conf } from '../conf.js';
 import { log } from '../log.js';
-// import { styled } from "@stitches/react";
-
-// const button = styled('button', {
-//     backgroundColor: "var(--color-background-button-primary-default)",
-//     color: "var(--color-text-button-primary)"
-// })
+import { Button, ButtonPrimary, InputLabel, InputText } from './styles.js';
 
 // ugly as fuck but it works
 function Configuration() {
@@ -16,10 +11,6 @@ function Configuration() {
 
     useEffect(() => {
         GM.registerMenuCommand('Configuration', () => setOpen(true));
-        // setWebhookUrl(conf.webhookUrl);
-        // conf.emitter.on('loadedValue', () => {
-        //     setWebhookUrl(conf.webhookUrl);
-        // });
     }, []);
 
     useEffect(() => {
@@ -38,8 +29,8 @@ function Configuration() {
     }}>
         <div style={{
             width: "300px",
-            background: "black",
-            color: "white",
+            background: "var(--color-background-body)",
+            color: "var(--color-text-base)",
             left: "50%",
             top: "50%",
             transform: "translate(-50%, -50%)",
@@ -47,7 +38,7 @@ function Configuration() {
             borderRadius: "5px",
             position: "absolute"
         }}>
-            <h1 style={{ fontSize: '2rem', paddingBottom: "1rem" }}>configuration</h1>
+            <h1 style={{ fontSize: '1.5rem', paddingBottom: "1rem" }}>Point Logger Configuration</h1>
             <form onSubmit={(e) => {
                 e.preventDefault();
                 const data = new FormData(e.currentTarget);
@@ -55,16 +46,25 @@ function Configuration() {
                 log("set url to", conf.webhookUrl);
                 conf.save();
                 setOpen(false);
+            }} style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "1em",
             }}>
                 <div>
                     <label>
-                        <span style={{ display: "block" }}>webhook url</span>
-                        <input type="text" name="xtc-webhook-url" value={webhookUrl} onChange={x => setWebhookUrl(x.target.value)} />
+                        <InputLabel style={{ display: "block" }}>webhook url</InputLabel>
+                        <InputText type="text" name="xtc-webhook-url" value={webhookUrl} onChange={(x: any) => setWebhookUrl(x.target.value)} />
                     </label>
                 </div>
-                <div>
-                    <button type="button" onClick={() => setOpen(false)}>Cancel</button>
-                    <button>💾 save</button>
+                <div style={{
+                    display: "flex",
+                    gap: "1em",
+                    flexWrap: "wrap",
+                    alignItems: "right"
+                }}>
+                    <Button type="button" onClick={() => setOpen(false)}>Cancel</Button>
+                    <ButtonPrimary>Save</ButtonPrimary>
                 </div>
             </form>
         </div>

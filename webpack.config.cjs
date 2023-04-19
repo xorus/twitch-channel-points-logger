@@ -23,9 +23,9 @@ module.exports = {
     }),
     new UserscriptPlugin({
       headers: {
-        name: 'channel-points-logger',
-        description: 'Logs channel points',
-        version: `${version}-build.${new Date().getTime()}`, //[buildNo]`,
+        name: 'twitch-channel-points-logger',
+        description: 'Logs channel points. For my own sanity, this script is bundled using Webpack. Check the GitHub link for a readable source code.',
+        version: `${version}-build.${new Date().getTime()}[buildNo]`, //`,
         author: "Xorus",
         homepage: "https://github.com/xorus/twitch-channel-points-logger",
         bugs: "https://github.com/xorus/twitch-channel-points-logger/issues",
@@ -60,9 +60,9 @@ module.exports = {
       directory: path.join(__dirname, 'dist'),
       watch: true,
     },
-    devMiddleware: {
-      writeToDisk: true
-    },
+    // devMiddleware: {
+    //   writeToDisk: true
+    // },
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
