@@ -32,13 +32,13 @@ export class Watcher {
             for (let el of document.querySelectorAll<HTMLDivElement>('.ReactModal__Content')) {
                 el.style.display = "none";
                 // find the point count, it will always be in a tooltip in the format "XXX Currency Name"
-                let regex = new RegExp(`([\\d. ',]+) ${this.currencyNameRegex}`, "i");
+                let regex = new RegExp(`>?\s*([\\d. ',]+) ${this.currencyNameRegex}`, "i");
                 let matches = el.innerHTML.match(regex);
                 if (matches && matches[1]) {
                     // normalize point count into something more number-ish
                     // twitch uses different separators depending on user locale, so we just remove everything that's not a number from the string
                     this.currentPointCount = matches[1].replace(/[^\d]/g, '');
-                    log("Updated channel point count =", this.currentPointCount);
+                    log("Current channel point count =", this.currentPointCount, el.innerHTML);
                     setPoints(this.currentPointCount);
                     break;
                 }

@@ -6,11 +6,11 @@ import { Button, ButtonPrimary, InputLabel, InputText } from './styles.js';
 
 // ugly as fuck but it works
 function Configuration() {
-    const [open, setOpen] = useState<boolean>(true);
+    const [open, setOpen] = useState<boolean>(false);
     const [webhookUrl, setWebhookUrl] = useState<string>('');
 
     useEffect(() => {
-        GM.registerMenuCommand('Configuration', () => setOpen(true));
+        GM.registerMenuCommand('Configuration', () => setOpen(false));
     }, []);
 
     useEffect(() => {

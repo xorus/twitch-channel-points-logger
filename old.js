@@ -310,13 +310,7 @@
       "position": [
         1280,
         540
-      ],
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "5",
-          "name": "Google jdpepi"
-        }
-      }
+      ]
     }
   ],
   "pinData": {},
