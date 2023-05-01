@@ -41,10 +41,12 @@ export const InputText = styled('input', {
     borderColor: 'var(--color-border-input)',
     color: 'var(--color-text-input)',
     backgroundColor: 'var(--color-background-input)',
-    width: '100%',
+    width: 'calc(100% - 4px)',
     height: 'var(--input-size-default)',
     fontSize: 'var(--input-text-default)',  
     borderRadius: 'var(--border-radius-medium)',
+    paddingLeft: '2px',
+    paddingRight: '2px',
     '&:hover': {
         outline: 'none',
         borderColor: 'var(--color-border-input-hover)',

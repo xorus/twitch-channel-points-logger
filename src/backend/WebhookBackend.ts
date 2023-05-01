@@ -1,7 +1,7 @@
-import { conf } from "../conf.js";
-import { channelHandle } from "../lib.js";
-import { error, log } from "../log.js";
-import { pointEmitter } from "../store.js";
+import {conf} from "../conf.js";
+import {channelHandle} from "../lib.js";
+import {log} from "../log.js";
+import {pointEmitter} from "../store.js";
 
 export class WebhookBackend {
     constructor() {
@@ -15,7 +15,7 @@ export class WebhookBackend {
         if (newValue === undefined) return;
 
         if (!conf.webhookUrl) {
-            error("no webhook url");
+            // error("no webhook url"); // disabled
             return;
         }
 
@@ -30,8 +30,7 @@ export class WebhookBackend {
                 channel: channelHandle()
             }),
             onload: function (response) {
-                var data = JSON.parse(response.responseText);
-                log("sent webhook", data);
+                log("sent webhook", JSON.parse(response.responseText));
             },
             onerror: function (error) {
                 log("webhook error");
