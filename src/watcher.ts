@@ -60,7 +60,6 @@ export class Watcher {
                 // find the point count, it will always be in a tooltip in the format "XXX Currency Name"
                 // french locale uses an "NNBSP" number separator ("4 840 Points de chaîne" ????)
                 let regex = new RegExp(`^([\\d. ',\u00A0\u2000-\u200B\u202F]+) ${this.currencyNameRegex}`, "i");
-                console.log(regex)
                 let matches = el.innerText.match(regex);
                 if (matches && matches[1]) {
                     // normalize point count into something more number-ish
