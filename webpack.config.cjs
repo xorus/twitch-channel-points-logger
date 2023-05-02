@@ -24,7 +24,7 @@ module.exports = {
     plugins: [
         new DefinePlugin({
             '__WEBSERVICE_URL_LOGIN__': JSON.stringify(`${WEBSERVICE_BASE_URL}/login/twitch`),
-            '__WEBSERVICE_URL_POINT_COUNT__': JSON.stringify(`${WEBSERVICE_BASE_URL}/points`),
+            '__WEBSERVICE_URL_POINT_COUNT__': JSON.stringify(`${WEBSERVICE_BASE_URL}/api/points`),
         }),
         new NormalModuleReplacementPlugin(new RegExp(/^\..+\.js$/), function (resource) {
             resource.request = resource.request.replace(new RegExp(/\.js$/), '');

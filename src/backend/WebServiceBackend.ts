@@ -12,7 +12,6 @@ export class WebServiceBackend {
     }
 
     pointsChanged(newValue?: string) {
-        log("here");
         if (newValue === undefined) return;
 
         if (!conf.authorizationToken) {
