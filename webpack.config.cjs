@@ -23,7 +23,7 @@ module.exports = {
     },
     plugins: [
         new DefinePlugin({
-            '__WEBSERVICE_URL_LOGIN__': JSON.stringify(`${WEBSERVICE_BASE_URL}/api/login/twitch`),
+            '__WEBSERVICE_URL_LOGIN__': JSON.stringify(`${WEBSERVICE_BASE_URL}/login_userscript`),
             '__WEBSERVICE_URL_POINT_COUNT__': JSON.stringify(`${WEBSERVICE_BASE_URL}/api/points`),
         }),
         new NormalModuleReplacementPlugin(new RegExp(/^\..+\.js$/), function (resource) {
