@@ -10,19 +10,9 @@ function Configuration() {
     const [webhookUrl, setWebhookUrl] = useState<string>('');
     const [authToken, setAuthToken] = useState<string>('');
     const [whitelist, setWhitelist] = useState<string>('');
-    const [menuCommandId, setMenuCommandId] = useState<number>(0);
 
     useEffect(() => {
-        try {
-            GM.registerMenuCommand('Configuration', () => setOpen(true)).then(x => {
-                setMenuCommandId(x);
-            });
-        } catch (e) {
-            // userscript extension does not return the menu position in a promise
-            setMenuCommandId(0);
-        }
-
-
+        GM.registerMenuCommand('Configuration', () => setOpen(true));
     }, []);
 
     useEffect(() => {
