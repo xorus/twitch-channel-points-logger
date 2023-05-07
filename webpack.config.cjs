@@ -6,8 +6,8 @@ const dev = process.env.NODE_ENV === 'development';
 
 const version = "0.1.0";// + (new Date().getTime());
 
-const WEBSERVICE_DOMAIN = process.env.WEBSERVICE_BASE_URL ?? 'localhost';
-const WEBSERVICE_BASE_URL = process.env.WEBSERVICE_BASE_URL ?? 'http://localhost:8000';
+const WEBSERVICE_DOMAIN = process.env.WEBSERVICE_BASE_URL ?? 'pointypoints';
+const WEBSERVICE_BASE_URL = process.env.WEBSERVICE_BASE_URL ?? 'https://pointypoints.xorus.dev';
 
 /**
  * @type {import('webpack').Configuration}
