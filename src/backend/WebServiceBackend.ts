@@ -42,8 +42,7 @@ export class WebServiceBackend {
             },
             data: JSON.stringify({
                 value: newValue,
-                channel_name: handle,
-                date: new Date().toISOString()
+                channel_name: handle
             }),
             onload: function (response) {
                 var data = JSON.parse(response.responseText);

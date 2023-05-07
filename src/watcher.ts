@@ -10,19 +10,6 @@ export class Watcher {
     private currencyNameRegex?: string;
     private currentPointCount?: string;
 
-    private findButton() {
-        const image = document.querySelector<HTMLImageElement>('button .channel-points-icon__image');
-        log("could not find channel points image");
-        if (!image) return undefined;
-        // the currency name is written in the image alt attribute, which will be useful to match via regex later
-        this.currencyNameRegex = escapeRegExp(image.alt);
-
-        const btn = image.closest<HTMLButtonElement>('button');
-        if (!btn || !btn.parentElement) return undefined;
-
-        return btn;
-    }
-
     computePointCount() {
         let btn: HTMLButtonElement | null | undefined = undefined;
 
