@@ -71,8 +71,32 @@ function Configuration() {
                 flexDirection: "column",
                 gap: "1em",
             }}>
+                {authenticated ? undefined :
+                    <p>
+                        Welcome!<br/>
+                        Login is a bit of a manual process for now, sorry! <br/><br/>
+                        <ol style={{listStyleType: 'decimal'}}>
+                            <li>Click Login</li>
+                            <li>Login via Twitch in the opened pop-up</li>
+                            <li>Copy the token into the "Auth token" field</li>
+                            <li>Close the pop-up</li>
+                            <li>Fill in the "channels to log" field (or just put * if you don't care)</li>
+                            <li>Hit "Save"</li>
+                        </ol>
+                    </p>
+                }
+
+                {/*<div>*/}
+                {/*    {authenticated ? <strong>Logged in</strong> : <strong>Not logged in</strong>}*/}
+                {/*</div>*/}
                 <div>
-                    {authenticated ? <strong>Logged in</strong> : <strong>Not logged in</strong>}
+                    <label>
+                        <InputLabel style={{display: "block"}}>
+                            Auth token
+                        </InputLabel>
+                        <InputText type="text" name="xtc-auth-token" value={authToken}
+                                   onChange={(x: any) => setAuthToken(x.target.value.trim())}/>
+                    </label>
                 </div>
 
                 <div>
@@ -88,12 +112,12 @@ function Configuration() {
                 <div>
                     <label>
                         <InputLabel style={{display: "block"}}>
-                            Channels to log (comma separated list)
+                            Channels to log (comma separated list, use * to include all channels)
                         </InputLabel>
                         <InputText type="text" name="xtc-whitelist" value={whitelist}
                                    placeholder="example: dougdoug, pointcrow"
                                    title="Comma separated values, use * to include all channels"
-                                   onChange={(x: any) => setWhitelist(x.target.value)}/>
+                                   required onChange={(x: any) => setWhitelist(x.target.value)}/>
                     </label>
                 </div>
 
@@ -109,15 +133,6 @@ function Configuration() {
 
                 <details>
                     <summary>advanced</summary>
-                    <div>
-                        <label>
-                            <InputLabel style={{display: "block"}}>
-                                Auth token
-                            </InputLabel>
-                            <InputText type="text" name="xtc-auth-token" value={authToken}
-                                       onChange={(x: any) => setAuthToken(x.target.value)}/>
-                        </label>
-                    </div>
                     <div>
                         <label>
                             <InputLabel style={{display: "block"}}>Custom webhook url</InputLabel>
