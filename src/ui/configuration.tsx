@@ -62,8 +62,8 @@ function Configuration() {
             <form onSubmit={(e) => {
                 e.preventDefault();
                 const data = new FormData(e.currentTarget);
-                conf.webhookUrl = data.get('xtc-webhook-url') as string ?? '';
-                conf.authorizationToken = data.get('xtc-auth-token') as string ?? '';
+                conf.webhookUrl = (data.get('xtc-webhook-url') as string ?? '').trim();
+                conf.authorizationToken = (data.get('xtc-auth-token') as string ?? '').trim();
                 conf.whitelist = data.get('xtc-whitelist') as string ?? '';
                 log("set url to", conf.webhookUrl);
                 log("set auth token to", conf.authorizationToken);
