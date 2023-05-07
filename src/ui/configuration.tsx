@@ -13,9 +13,16 @@ function Configuration() {
     const [menuCommandId, setMenuCommandId] = useState<number>(0);
 
     useEffect(() => {
-        GM.registerMenuCommand('Configuration', () => setOpen(true)).then(x => {
-            setMenuCommandId(x);
-        });
+        try {
+            GM.registerMenuCommand('Configuration', () => setOpen(true)).then(x => {
+                setMenuCommandId(x);
+            });
+        } catch (e) {
+            // userscript extension does not return the menu position in a promise
+            setMenuCommandId(0);
+        }
+
+
     }, []);
 
     useEffect(() => {
