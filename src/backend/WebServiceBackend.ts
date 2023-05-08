@@ -11,7 +11,7 @@ export class WebServiceBackend {
         });
     }
 
-    pointsChanged(newValue?: string) {
+    async pointsChanged(newValue?: string) {
         if (newValue === undefined) return;
 
         if (!conf.authorizationToken) {
@@ -25,12 +25,24 @@ export class WebServiceBackend {
         }
 
         const handle = channelHandle();
+        if (!handle) {
+            error("could not determine channel handle");
+            return;
+        }
         if (!conf.whitelist.includes('*')) {
             const whitelist = conf.whitelist.toLowerCase().replace(/(,|;)/, ' ').split(' ');
             if (!whitelist.find(x => x === handle)) {
                 log("not in whitelist");
                 return;
             }
+        }
+
+        const lastCount = await conf.getLastPointCount(handle);
+        if (lastCount !== newValue) {
+            conf.setLastPointCount(handle, newValue);
+        } else {
+            log("Point count did not change since last time. Not sending update to backend.");
+            return;
         }
 
         GM.xmlHttpRequest({

@@ -2,7 +2,7 @@
 // @name        twitch-channel-points-logger
 // @name:en     Twitch Channel Points Logger
 // @description Logs channel points. For my own sanity, this script is bundled using Webpack. Check the GitHub link for a readable source code.
-// @version     0.2.0.1683568254226.1
+// @version     0.2.0.1683569670681.1
 // @author      Xorus
 // @homepage    https://github.com/xorus/twitch-channel-points-logger
 // @match       https://www.twitch.tv/*

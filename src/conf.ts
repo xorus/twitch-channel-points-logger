@@ -1,11 +1,14 @@
 import {Emitter} from 'subscribe'
 
+type LastPointCount = Record<string, string>;
+
 export class Conf {
     public webhookUrl?: string;
     public backendUrl?: string;
     public authorizationToken?: string;
     public whitelist?: string;
     public readonly emitter = new Emitter<'loadedValue'>();
+    private lastPointCount: LastPointCount = {};
 
     public constructor() {
         this.load();
@@ -27,6 +30,9 @@ export class Conf {
         GM.getValue<string>('whitelist', '').then(x => {
             this.whitelist = x;
             this.emitter.emit("loadedValue");
+        });
+        GM.getValue<LastPointCount>('lastPointCount', {}).then(x => {
+            this.lastPointCount = x;
         });
     }
 
@@ -60,6 +66,19 @@ export class Conf {
 
     public getPointCountUrl() {
         return (this.backendUrl ?? __WEBSERVICE_URL__) + __ENDPOINT_POINT_COUNT__;
+    }
+
+    public setLastPointCount(channel: string, count: string) {
+        GM.setValue('lastPointCount', {...this.lastPointCount, [channel]: count});
+    }
+
+    public async getLastPointCount(channel: string): Promise<string | null> {
+        // re-update every time because it could have changed in another tab
+        const x = await GM.getValue<LastPointCount>('lastPointCount', {});
+        if (x[channel] !== undefined) {
+            return x[channel];
+        }
+        return null;
     }
 }
 
