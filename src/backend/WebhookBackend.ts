@@ -14,7 +14,7 @@ export class WebhookBackend {
     pointsChanged(newValue?: string) {
         if (newValue === undefined) return;
 
-        if (!conf.webhookUrl) {
+        if (!conf.webhookUrl || conf.webhookUrl.trim().length === 0) {
             // error("no webhook url"); // disabled
             return;
         }

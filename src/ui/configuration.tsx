@@ -8,6 +8,7 @@ import {Button, ButtonPrimary, InputLabel, InputText} from './styles.js';
 function Configuration() {
     const [open, setOpen] = useState<boolean>(false);
     const [webhookUrl, setWebhookUrl] = useState<string>('');
+    const [backendUrl, setBackendUrl] = useState<string>('');
     const [authToken, setAuthToken] = useState<string>('');
     const [whitelist, setWhitelist] = useState<string>('');
 
@@ -20,6 +21,7 @@ function Configuration() {
             setWebhookUrl(conf.webhookUrl ?? '');
             setWhitelist(conf.whitelist ?? '');
             setAuthToken(conf.authorizationToken ?? '');
+            setBackendUrl(conf.backendUrl ?? '');
         }
     }, [open]);
 
@@ -62,8 +64,15 @@ function Configuration() {
                 conf.webhookUrl = (data.get('xtc-webhook-url') as string ?? '').trim();
                 conf.authorizationToken = (data.get('xtc-auth-token') as string ?? '').trim();
                 conf.whitelist = data.get('xtc-whitelist') as string ?? '';
-                log("set url to", conf.webhookUrl);
-                log("set auth token to", conf.authorizationToken);
+                const backendUrl = data.get('xtc-backend-url') as string ?? '';
+                if (backendUrl.trim().length === 0) {
+                    conf.backendUrl = undefined;
+                } else {
+                    conf.backendUrl = backendUrl;
+                }
+                // log("set url to", conf.webhookUrl);
+                // log("set auth token to", conf.authorizationToken);
+                // log("set backend url to", conf.backendUrl);
                 conf.save();
                 setOpen(false);
             }} style={{
@@ -71,39 +80,35 @@ function Configuration() {
                 flexDirection: "column",
                 gap: "1em",
             }}>
-                {authenticated ? undefined :
-                    <p>
-                        Welcome!<br/>
-                        Login is a bit of a manual process for now, sorry! <br/><br/>
-                        <ol style={{listStyleType: 'decimal'}}>
-                            <li>Click Login</li>
-                            <li>Login via Twitch in the opened pop-up</li>
-                            <li>Copy the token into the "Auth token" field</li>
-                            <li>Close the pop-up</li>
-                            <li>Fill in the "channels to log" field (or just put * if you don't care)</li>
-                            <li>Hit "Save"</li>
-                        </ol>
-                    </p>
-                }
-
+                <p>
+                    Welcome!<br/>
+                    <ol style={{listStyleType: 'decimal'}}>
+                        <li>{authenticated ? '✅ ' : undefined}Click Login</li>
+                        <li>{authenticated ? '✅ ' : undefined}Login via Twitch in the opened pop-up</li>
+                        <li>{authenticated ? '✅ ' : undefined}Close the pop-up</li>
+                        <li>
+                            {whitelist.trim().length > 0 ? '✅ ' : undefined}
+                            Fill in the "channels to log" field (or just put * if you don't care)
+                        </li>
+                    </ol>
+                </p>
                 {/*<div>*/}
                 {/*    {authenticated ? <strong>Logged in</strong> : <strong>Not logged in</strong>}*/}
                 {/*</div>*/}
                 <div>
-                    <label>
-                        <InputLabel style={{display: "block"}}>
-                            Auth token
-                        </InputLabel>
-                        <InputText type="text" name="xtc-auth-token" value={authToken}
-                                   onChange={(x: any) => setAuthToken(x.target.value.trim())}/>
-                    </label>
-                </div>
-
-                <div>
                     <ButtonPrimary type="button" onClick={() => {
-                        window.open(__WEBSERVICE_URL_LOGIN__, 'point counter login',
+                        window.open(conf.getLoginUrl(), 'point counter login',
                             'status=no,location=no,toolbar=no,menubar=no,width=500,height=700'
-                        )
+                        );
+
+                        conf.waitUntilAuthTokenChanges().then(token => {
+                            try {
+                                setAuthToken(token);
+                            } catch (e) {
+                                // user probably closed the config window in the meantime
+                                console.error("e ", e);
+                            }
+                        });
                     }}>
                         {authenticated ? <strong>Reauthenticate</strong> : <strong>Login</strong>}
                     </ButtonPrimary>
@@ -133,6 +138,23 @@ function Configuration() {
 
                 <details>
                     <summary>advanced</summary>
+                    <div>
+                        <label>
+                            <InputLabel style={{display: "block"}}>
+                                App backend auth token
+                            </InputLabel>
+                            <InputText type="text" name="xtc-auth-token" value={authToken}
+                                       onChange={(x: any) => setAuthToken(x.target.value.trim())}/>
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <InputLabel style={{display: "block"}}>Custom backend url</InputLabel>
+                            <InputText type="text" name="xtc-backend-url" value={backendUrl}
+                                       placeholder="Leave empty if unsure"
+                                       onChange={(x: any) => setBackendUrl(x.target.value)}/>
+                        </label>
+                    </div>
                     <div>
                         <label>
                             <InputLabel style={{display: "block"}}>Custom webhook url</InputLabel>

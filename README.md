@@ -2,8 +2,7 @@
 
 TODO:
 
-- auto-detect the login token
-- have some sort of FTUE that shows the login dialog and asks you the streams to log
+- move to a browser extension
 
 ## install
 

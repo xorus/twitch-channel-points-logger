@@ -1,12 +1,13 @@
+require('dotenv').config()
 const path = require('path');
 const {UserscriptPlugin} = require('webpack-userscript');
 const {NormalModuleReplacementPlugin, DefinePlugin} = require('webpack');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
 const dev = process.env.NODE_ENV === 'development';
 
-const version = "0.1.0";// + (new Date().getTime());
+const version = "0.2.0";// + (new Date().getTime());
 
-const WEBSERVICE_DOMAIN = process.env.WEBSERVICE_BASE_URL ?? 'pointypoints';
+const WEBSERVICE_DOMAIN = process.env.WEBSERVICE_DOMAIN ?? 'pointypoints';
 const WEBSERVICE_BASE_URL = process.env.WEBSERVICE_BASE_URL ?? 'https://pointypoints.xorus.dev';
 
 /**
@@ -23,8 +24,9 @@ module.exports = {
     },
     plugins: [
         new DefinePlugin({
-            '__WEBSERVICE_URL_LOGIN__': JSON.stringify(`${WEBSERVICE_BASE_URL}/login_userscript`),
-            '__WEBSERVICE_URL_POINT_COUNT__': JSON.stringify(`${WEBSERVICE_BASE_URL}/api/points`),
+            '__ENDPOINT_LOGIN__': JSON.stringify(`/login_userscript`),
+            '__ENDPOINT_POINT_COUNT__': JSON.stringify(`/api/points`),
+            '__WEBSERVICE_URL__': JSON.stringify(WEBSERVICE_BASE_URL),
         }),
         new NormalModuleReplacementPlugin(new RegExp(/^\..+\.js$/), function (resource) {
             resource.request = resource.request.replace(new RegExp(/\.js$/), '');
@@ -39,6 +41,7 @@ module.exports = {
                 bugs: "https://github.com/xorus/twitch-channel-points-logger/issues",
                 match: [
                     "https://www.twitch.tv/*",
+                    WEBSERVICE_BASE_URL + "/api/auth/twitch*",
                 ],
                 connect: [
                     WEBSERVICE_DOMAIN
@@ -51,7 +54,8 @@ module.exports = {
                     "GM.info",
                     "GM.xmlHttpRequest",
                     "GM.registerMenuCommand",
-                ]
+                ],
+                "run-at": "document-idle"
             },
             pretty: true,
             strict: true,

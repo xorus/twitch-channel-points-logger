@@ -35,7 +35,7 @@ export class WebServiceBackend {
 
         GM.xmlHttpRequest({
             method: 'POST',
-            url: __WEBSERVICE_URL_POINT_COUNT__,
+            url: conf.getPointCountUrl(),
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + conf.authorizationToken
@@ -45,8 +45,7 @@ export class WebServiceBackend {
                 channel_name: handle
             }),
             onload: function (response) {
-                var data = JSON.parse(response.responseText);
-                log("sent point count to webservice", data);
+                log("sent point count to webservice", JSON.parse(response.responseText));
             },
             onerror: function (error) {
                 log("webservice error");
