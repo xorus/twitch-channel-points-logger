@@ -7,7 +7,7 @@ const dev = process.env.NODE_ENV === 'development';
 
 const version = "0.2.0";// + (new Date().getTime());
 
-const WEBSERVICE_DOMAIN = process.env.WEBSERVICE_DOMAIN ?? 'pointypoints';
+const WEBSERVICE_DOMAIN = process.env.WEBSERVICE_DOMAIN ?? 'pointypoints.xorus.dev';
 const WEBSERVICE_BASE_URL = process.env.WEBSERVICE_BASE_URL ?? 'https://pointypoints.xorus.dev';
 
 /**
