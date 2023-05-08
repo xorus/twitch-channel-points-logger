@@ -2,13 +2,16 @@
 
 TODO:
 
-- set up a prod instance and replace with prod urls
 - auto-detect the login token
 - have some sort of FTUE that shows the login dialog and asks you the streams to log
 
 ## install
 
-Install the userscript: (insert link here)
+[Install userscript](https://pointypoints.xorus.dev/userscript/twitch-channel-points-logger.user.js?nocache)
+
+Please check the backend server privacy policy: https://github.com/xorus/pointypoints#privacy
+
+TL;DR: I don't want none of your data and collect nothing apart the actual (point; channel) values.
 
 It will then create a configuration menu in your userscript extension, here I am using TamperMonkey:
 
